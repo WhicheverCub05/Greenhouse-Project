@@ -38,8 +38,16 @@ void loop() {
   }
   {
   int Moisture = analogRead(A0);
+  
+  float a;
+  a = 690;
+  float b;
+  b = 100;
+  float Moisture_Percent;
+  Moisture_Percent = b-((Moisture/a)*b);
+  
   Serial.print("SMOS: ");
-  Serial.print(Moisture);
+  Serial.print(Moisture_Percent);
 
   // Compute heat index in Celsius (isFahreheit = false)
   float hic = dht.computeHeatIndex(t, h, false);
@@ -58,13 +66,6 @@ void loop() {
   lcd.begin(20, 4);
   lcd.clear();
   
-  float a;
-  a = 1024;
-  float b;
-  b = 100;
-  float Moisture_Percent;
-  Moisture_Percent = b-((Moisture/a)*b);
-  
   lcd.print("SMOS : ");
   lcd.print(Moisture_Percent);
   
@@ -77,6 +78,5 @@ void loop() {
   lcd.print("ATEMP: ");
   lcd.print(hic);
   lcd.print(" C");
-  
   }
 }
