@@ -1,4 +1,4 @@
-#include <DHT.h>
+ #include <DHT.h>
 #include <DHT_U.h>
 #include "DHT.h"
 
@@ -21,7 +21,7 @@ void setup() {
   pinMode(A0, INPUT);
   pinMode(LED_BUILTIN, OUTPUT); //to test if arduino runs without uploading code from ide
   Serial.begin(9600);
-  Serial.println(F("running Arduino_code_1 (no shell)"));
+  Serial.println(F("running Arduino_code_1 (fast blinker)"));
   dht.begin();
 }
 
@@ -39,8 +39,16 @@ void loop() {
   }
   {
   int Moisture = analogRead(A0);
+  
+  float a;
+  a = 690;
+  float b;
+  b = 100;
+  float Moisture_Percent;
+  Moisture_Percent = b-((Moisture/a)*b);
+  
   Serial.print("SMOS: ");
-  Serial.print(Moisture);
+  Serial.print(Moisture_Percent);
 
   // Compute heat index in Celsius (isFahreheit = false)
   float hic = dht.computeHeatIndex(t, h, false);
@@ -58,13 +66,6 @@ void loop() {
   LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
   lcd.begin(20, 4);
   lcd.clear();
-  
-  float a;
-  a = 1024;
-  float b;
-  b = 100;
-  float Moisture_Percent;
-  Moisture_Percent = b-((Moisture/a)*b);
   
   lcd.print("SMOS : ");
   lcd.print(Moisture_Percent);
